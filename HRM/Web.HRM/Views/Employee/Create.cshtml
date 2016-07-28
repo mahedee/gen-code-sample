@@ -1,0 +1,221 @@
+﻿@model Web.HRM.Models.Employee
+
+@{
+    ViewBag.Title = "Create";
+
+    var lstDept = ViewBag.DeptList;
+    var lstDesignation = ViewBag.DesignationList;
+
+}
+
+@*<h2>Create</h2>*@
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        <h4>Employee Information</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <table>
+            <tr>
+                <td>@Html.LabelFor(model => model.EmpCode, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.EmpCode)
+                    @Html.ValidationMessageFor(model => model.EmpCode)
+                </td>
+                <td>@Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.FullName)
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.NickName, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.NickName)
+                    @Html.ValidationMessageFor(model => model.NickName)
+                </td>
+                <td>@Html.LabelFor(model => model.DesignationId, "DesignationId", new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.DropDownList("DesignationId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.DesignationId)
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.DeptId, "DeptId", new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.DropDownList("DeptId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.DeptId)
+                </td>
+                <td>@Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.Phone)
+                    @Html.ValidationMessageFor(model => model.Phone)
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </td>
+                <td>@Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })</td>
+                <td>
+                    @Html.EditorFor(model => model.Address)
+                    @Html.ValidationMessageFor(model => model.Address)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Save" class="btn btn-primary" /> ||
+                    @Html.ActionLink("Back to List", "Index")
+
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <hr />
+        <table>
+            <tr>
+                <td>@Html.Label("Dept: ", new { @class = "control-label col-md-2" }) </td>
+                <td>
+                    @Html.DropDownList("DeptSearch", new SelectList(lstDept, "Id", "Name"), "---Select---", new { @style = "width : 200px", @class = "form-control" })
+                </td>
+                <td>@Html.Label("Designation: ", new { @class = "control-label col-md-2" })</td>
+                <td>
+
+                    @Html.DropDownList("DesigSearch", new SelectList(lstDesignation, "Id", "Name"), "---Select---", new { @style = "width : 200px", @class = "form-control" })
+                </td>
+                <td>
+                    <input type="button" value="Search" class="btn btn-primary" id="getData" />
+                </td>
+            </tr>
+        </table>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.EmpCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmpCode)
+                    @Html.ValidationMessageFor(model => model.EmpCode)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FullName)
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.NickName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NickName)
+                    @Html.ValidationMessageFor(model => model.NickName)
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.DesignationId, "DesignationId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DesignationId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.DesignationId)
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.DeptId, "DeptId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DeptId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.DeptId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Phone)
+                    @Html.ValidationMessageFor(model => model.Phone)
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Address)
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActionDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ActionDate)
+                    @Html.ValidationMessageFor(model => model.ActionDate)
+                </div>
+            </div>*@
+        @*<br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+}
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+<br /><br /><br />
+
+<div id="saveDiv">
+    @{ Html.RenderAction("_LoadSearchEmployee", new { desigId = "", deptId = "" }); }
+</div>
+<div id="partial">
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        $(function () {
+
+            $('#getData').click(function () {
+                //alert('Clicked');
+                var deptId = $('#DeptSearch').val();
+                var desigId = $('#DesigSearch').val();
+                $('#saveDiv').hide();
+
+                var url = "@Html.Raw(Url.Action("_LoadSearchEmployee", "Employee", new { desigId = "-parameter", deptId = "sempar" }))";
+                url = url.replace("-parameter", desigId);
+                url = url.replace("sempar", deptId);
+                $('#partial').load(url);
+            });
+
+        });
+    </script>
+}
