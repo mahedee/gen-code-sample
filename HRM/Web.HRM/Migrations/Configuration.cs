@@ -28,8 +28,7 @@ namespace Web.HRM.Migrations
             var objIMP = new Dept { Name = "Software Implementation" };
             var objFin = new Dept { Name = "Finance & Administration" };
             var objMkt = new Dept { Name = "Sells & Marketing" };
-            var objSchain = new Dept { Name = "Supply Chain" };
-            var objInn = new Dept { Name = "Software Innovation" };
+
 
 
             var lstEmployees = new List<Employee>()
@@ -54,14 +53,23 @@ namespace Web.HRM.Migrations
             lstEmployees.ForEach(s => context.Employees.AddOrUpdate(p => p.FullName, s));
             context.SaveChanges();
 
-            //context.Designations.AddOrUpdate(
-            //    p => p.Name,
-            //        new Designation { Name = "Software Engineer" },
-            //        new Designation { Name = "Senior Software Engieer" },
-            //        new Designation { Name = "Software Architect" },
-            //        new Designation { Name = "Business Analyst" },
-            //        new Designation { Name = "Project Manager" }
-            //    );
+            context.Designations.AddOrUpdate(
+                p => p.Name,
+                    new Designation { Name = "Executive" },
+                    new Designation { Name = "Senior Executive" },
+                    new Designation { Name = "Manager" },
+                    new Designation { Name = "Deputy Manager" },
+                    new Designation { Name = "Project Manager" }
+                );
+
+
+            context.Depts.AddOrUpdate(
+                p => p.Name,
+                    new Dept { Name = "Supply Chain" },
+                    new Dept { Name = "Software Innovation" }
+
+                );
+
 
             //  This method will be called after migrating to the latest version.
 

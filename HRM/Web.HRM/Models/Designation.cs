@@ -15,6 +15,7 @@ namespace Web.HRM.Models
         }
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Display(Name = "Designation")]
         public string Name { get; set; }
         public virtual List<Employee> Employees { get; set; }
         public DateTime ActionDate { get; set; }

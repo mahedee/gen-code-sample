@@ -3,7 +3,7 @@ namespace Web.HRM.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class firstmig01 : DbMigration
+    public partial class initmig : DbMigration
     {
         public override void Up()
         {

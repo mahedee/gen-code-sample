@@ -19,13 +19,20 @@ namespace Web.HRM.Models
 
         [Display(Name = "Employee Code")]
         public string EmpCode { get; set; }
+
+        [Display(Name = "Full Name")]
         public string FullName { get; set; }
+
+        [Display(Name = "Nick Name")]
         public string NickName { get; set; }
+
+        [Display(Name = "Designation")]
         public int DesignationId { get; set; }
 
         [ForeignKey("DesignationId")]
         public virtual Designation Designation { get; set; }
 
+        [Display(Name = "Department")]
         public int DeptId { get; set; }
 
         [ForeignKey("DeptId")]

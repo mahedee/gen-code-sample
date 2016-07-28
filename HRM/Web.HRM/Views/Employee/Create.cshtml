@@ -23,12 +23,12 @@
 
         <table>
             <tr>
-                <td>@Html.LabelFor(model => model.EmpCode, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.EmpCode, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.EmpCode)
                     @Html.ValidationMessageFor(model => model.EmpCode)
                 </td>
-                <td>@Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.FullName, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.FullName)
                     @Html.ValidationMessageFor(model => model.FullName)
@@ -36,25 +36,25 @@
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.NickName, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.NickName, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.NickName)
                     @Html.ValidationMessageFor(model => model.NickName)
                 </td>
-                <td>@Html.LabelFor(model => model.DesignationId, "DesignationId", new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.DesignationId, "Designation", new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
-                    @Html.DropDownList("DesignationId", String.Empty)
+                    @Html.DropDownList("DesignationId", "---Select Dept---")
                     @Html.ValidationMessageFor(model => model.DesignationId)
                 </td>
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.DeptId, "DeptId", new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.DeptId, "Dept", new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
-                    @Html.DropDownList("DeptId", String.Empty)
+                    @Html.DropDownList("DeptId", "---Select Dept---")
                     @Html.ValidationMessageFor(model => model.DeptId)
                 </td>
-                <td>@Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Phone, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Phone)
                     @Html.ValidationMessageFor(model => model.Phone)
@@ -62,12 +62,12 @@
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Email, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Email)
                     @Html.ValidationMessageFor(model => model.Email)
                 </td>
-                <td>@Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Address, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Address)
                     @Html.ValidationMessageFor(model => model.Address)
@@ -84,17 +84,18 @@
                 <td></td>
             </tr>
         </table>
+
         <hr />
         <table>
             <tr>
-                <td>@Html.Label("Dept: ", new { @class = "control-label col-md-2" }) </td>
+                <td>@Html.Label("Dept: ", new { @style = "width : 150px", @class = "control-label col-md-2" }) </td>
                 <td>
-                    @Html.DropDownList("DeptSearch", new SelectList(lstDept, "Id", "Name"), "---Select---", new { @style = "width : 200px", @class = "form-control" })
+                    @Html.DropDownList("DeptSearch", new SelectList(lstDept, "Id", "Name"), "---Select Dept---", new { @style = "width : 200px", @class = "form-control" })
                 </td>
                 <td>@Html.Label("Designation: ", new { @class = "control-label col-md-2" })</td>
                 <td>
 
-                    @Html.DropDownList("DesigSearch", new SelectList(lstDesignation, "Id", "Name"), "---Select---", new { @style = "width : 200px", @class = "form-control" })
+                    @Html.DropDownList("DesigSearch", new SelectList(lstDesignation, "Id", "Name"), "---Select Designation---", new { @style = "width : 200px", @class = "form-control" })
                 </td>
                 <td>
                     <input type="button" value="Search" class="btn btn-primary" id="getData" />
@@ -102,84 +103,6 @@
             </tr>
         </table>
 
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.EmpCode, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EmpCode)
-                    @Html.ValidationMessageFor(model => model.EmpCode)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.FullName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FullName)
-                    @Html.ValidationMessageFor(model => model.FullName)
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.NickName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.NickName)
-                    @Html.ValidationMessageFor(model => model.NickName)
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.DesignationId, "DesignationId", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("DesignationId", String.Empty)
-                    @Html.ValidationMessageFor(model => model.DesignationId)
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.DeptId, "DeptId", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("DeptId", String.Empty)
-                    @Html.ValidationMessageFor(model => model.DeptId)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Phone)
-                    @Html.ValidationMessageFor(model => model.Phone)
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email)
-                    @Html.ValidationMessageFor(model => model.Email)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Address)
-                    @Html.ValidationMessageFor(model => model.Address)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ActionDate, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ActionDate)
-                    @Html.ValidationMessageFor(model => model.ActionDate)
-                </div>
-            </div>*@
-        @*<br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>*@
     </div>
 }
 
@@ -215,6 +138,17 @@
                 url = url.replace("sempar", deptId);
                 $('#partial').load(url);
             });
+
+
+            $('#editRow').click(function () {
+
+                //var Something = $(this).closest('tr').find('td:eq(0)').text();
+                //alert(Something);
+
+                $('#EmpCode').val($(this).closest('tr').find('td:eq(0)').text().trim());
+
+             });
+
 
         });
     </script>
