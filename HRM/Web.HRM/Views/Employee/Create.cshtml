@@ -21,14 +21,17 @@
         <hr />
         @Html.ValidationSummary(true)
 
+        @*@Html.HiddenFor(model => model.Id)*@
+        <input type="hidden" value="0" id="Id" name="Id" />
+
         <table>
             <tr>
-                <td>@Html.LabelFor(model => model.EmpCode, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.EmpCode, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.EmpCode)
                     @Html.ValidationMessageFor(model => model.EmpCode)
                 </td>
-                <td>@Html.LabelFor(model => model.FullName, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.FullName, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.FullName)
                     @Html.ValidationMessageFor(model => model.FullName)
@@ -36,12 +39,12 @@
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.NickName, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.NickName, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.NickName)
                     @Html.ValidationMessageFor(model => model.NickName)
                 </td>
-                <td>@Html.LabelFor(model => model.DesignationId, "Designation", new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.DesignationId, "Designation", new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.DropDownList("DesignationId", "---Select Dept---")
                     @Html.ValidationMessageFor(model => model.DesignationId)
@@ -49,12 +52,12 @@
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.DeptId, "Dept", new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.DeptId, "Dept", new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.DropDownList("DeptId", "---Select Dept---")
                     @Html.ValidationMessageFor(model => model.DeptId)
                 </td>
-                <td>@Html.LabelFor(model => model.Phone, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Phone, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Phone)
                     @Html.ValidationMessageFor(model => model.Phone)
@@ -62,12 +65,12 @@
             </tr>
 
             <tr>
-                <td>@Html.LabelFor(model => model.Email, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Email, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Email)
                     @Html.ValidationMessageFor(model => model.Email)
                 </td>
-                <td>@Html.LabelFor(model => model.Address, new {@style = "width : 150px", @class = "control-label col-md-2" })</td>
+                <td>@Html.LabelFor(model => model.Address, new { @style = "width : 150px", @class = "control-label col-md-2" })</td>
                 <td>
                     @Html.EditorFor(model => model.Address)
                     @Html.ValidationMessageFor(model => model.Address)
@@ -76,8 +79,9 @@
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" value="Save" class="btn btn-primary" /> ||
-                    @Html.ActionLink("Back to List", "Index")
+                    <input type="submit" value="Save" id="btnSave" class="btn btn-primary" /> ||
+                    @Html.ActionLink("Clear", "Create", "Employee", null, new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Back to List", "Index")*@
 
                 </td>
                 <td></td>
@@ -140,16 +144,48 @@
             });
 
 
-            $('#editRow').click(function () {
+            $('.editRow').click(function () {
+                alert("Calling");
 
                 //var Something = $(this).closest('tr').find('td:eq(0)').text();
                 //alert(Something);
 
                 $('#EmpCode').val($(this).closest('tr').find('td:eq(0)').text().trim());
+                $('#FullName').val($(this).closest('tr').find('td:eq(1)').text().trim());
+                $('#NickName').val($(this).closest('tr').find('td:eq(2)').text().trim());
 
-             });
+                var designationId = $(this).closest('tr').find('td:eq(4)').text().trim();
+                var deptId = $(this).closest('tr').find('td:eq(6)').text().trim();
+                //alert(designationId);
+                $("#DesignationId").val(designationId);
+                $("#DeptId").val(deptId);
+
+                $('#Phone').val($(this).closest('tr').find('td:eq(7)').text().trim());
+                $('#Email').val($(this).closest('tr').find('td:eq(8)').text().trim());
+
+                $('#Address').val($(this).closest('tr').find('td:eq(9)').text().trim());
+
+                var empId = $(this).closest('tr').find('td:eq(10)').text().trim();
+                //alert(empId);
+                $("#Id").val(empId);
+                $("#btnSave").val("Edit");
+
+            });
 
 
         });
+
+        //function updateData() {
+
+        //       //var Something = $(this).closest('tr').find('td:eq(0)').text();
+        //    alert("Something");
+        //    alert('You clicked row ' + ($(this).index() + 1));
+
+        //       //alert(this.rowIndex);
+
+        //       $('#EmpCode').val($(this).closest('tr').find('td:eq(0)').text().trim());
+        //       $('#FullName').val($(this).closest('tr').find('td:eq(1)').text().trim());
+
+        //   }
     </script>
 }

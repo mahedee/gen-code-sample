@@ -61,9 +61,12 @@ namespace Web.HRM.Controllers
             if (ModelState.IsValid)
             {
                 employee.ActionDate = DateTime.Now;
-                db.Employees.Add(employee);
+                if(employee.Id != 0)
+                    db.Entry(employee).State = EntityState.Modified;
+                else
+                    db.Employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
             ViewBag.DeptId = new SelectList(db.Depts, "Id", "Name", employee.DeptId);
@@ -136,14 +139,22 @@ namespace Web.HRM.Controllers
         public ActionResult _LoadSearchEmployee(string desigId, string deptId)
         {
             List<Employee> employee = new List<Employee>();
-            if (String.IsNullOrEmpty(desigId) && string.IsNullOrEmpty(deptId))
-                employee = db.Employees.ToList();
-            else
-            {
-                int _desigId = Convert.ToInt32(desigId);
-                int _deptId = Convert.ToInt32(deptId);
-                employee = db.Employees.Where(p => p.DeptId == _deptId || p.DesignationId == _desigId).ToList();
-            }
+            int _desigId = 0;
+            int _deptId = 0;
+            Int32.TryParse(desigId, out _desigId);
+            Int32.TryParse(deptId, out _deptId);
+
+            employee = db.Employees.Where(p => (p.DeptId == _deptId || _deptId == 0) && 
+                (p.DesignationId == _desigId || _desigId == 0)).ToList();
+
+            //if (String.IsNullOrEmpty(desigId) && string.IsNullOrEmpty(deptId))
+            //    employee = db.Employees.ToList();
+            //else
+            //{
+            //    int _desigId = Convert.ToInt32(desigId);
+            //    int _deptId = Convert.ToInt32(deptId);
+            //    employee = db.Employees.Where(p => p.DeptId == _deptId || p.DesignationId == _desigId).ToList();
+            //}
 
             return PartialView(employee);
         }
