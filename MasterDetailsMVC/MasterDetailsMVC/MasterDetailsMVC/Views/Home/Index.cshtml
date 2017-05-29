@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Master details demo</h2>
+<div>
+    <div>
+        <h4>Category information</h4>
+        <table>
+            <tr>
+                <td>Category Code</td>
+                <td>
+                    <input type="text" id="categoryCode" />
+                </td>
+
+            </tr>
+            <tr>
+                <td>Category Name</td>
+                <td>
+                    <input type="text" id="categoryName" />
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>
+                    <textarea id="description" style="width:100%"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h4>Items information</h4>
+        <table>
+            <tr>
+                <td>Item Name</td>
+                <td>Quantity</td>
+                <td>Unit Price</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="itemName" />
+                    <span class="error">Item name required</span>
+                </td>
+                <td>
+                    <input type="text" id="quantity" />
+                    <span class="error">Valid quantity required</span>
+                </td>
+                <td>
+                    <input type="text" id="unitPrice" />
+                    <span class="error">Valid unit price required</span>
+                </td>
+                <td>
+                    <input type="button" id="add" value="Add" class="btn btn-info" />
+                </td>
+            </tr>
+        </table>
+        <div id="categoryItems">
+
+        </div>
+        <div style="padding:10px 0px; text-align:right">
+            <input id="submit" type="button" value="Save" style="float:left;" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+@section Scripts{
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        //Date Picker
+        //$(function () {
+        //    $('#orderDate').datepicker({
+        //        dateFormat: 'mm-dd-yy'
+        //    });
+        //});
+
+        $(document).ready(function () {
+            var categoryItems = [];
+            //Add button click function
+            $('#add').click(function () {
+                //Check validation of order item
+                var isValidItem = true;
+                if ($('#itemName').val().trim() == '') {
+                    isValidItem = false;
+                    $('#itemName').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#itemName').siblings('span.error').css('visibility', 'hidden');
+                }
+
+                if (!($('#quantity').val().trim() != '' && !isNaN($('#quantity').val().trim()))) {
+                    isValidItem = false;
+                    $('#quantity').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#quantity').siblings('span.error').css('visibility', 'hidden');
+                }
+
+                if (!($('#unitPrice').val().trim() != '' && !isNaN($('#unitPrice').val().trim()))) {
+                    isValidItem = false;
+                    $('#unitPrice').siblings('span.error').css('visibility', 'visible');
+                }
+                else {
+                    $('#unitPrice').siblings('span.error').css('visibility', 'hidden');
+                }
+
+                //Add item to list if valid
+                if (isValidItem) {
+                    categoryItems.push({
+                        ItemName: $('#itemName').val().trim(),
+                        Quantity: parseInt($('#quantity').val().trim()),
+                        UnitPrice: parseFloat($('#unitPrice').val().trim()),
+                        TotalPrice: parseInt($('#quantity').val().trim()) * parseFloat($('#unitPrice').val().trim())
+                    });
+
+                    //Clear fields
+                    $('#itemName').val('').focus();
+                    $('#quantity,#unitPrice').val('');
+
+                }
+                //populate items table
+                GeneratedItemsTable();
+
+            });
+            //Save button click function
+            $('#submit').click(function () {
+                //validation of order
+                var isAllValid = true;
+                if (categoryCode.length == 0) {
+                    $('#categoryCode').html('<span style="color:red;">Please add order items</span>');
+                    isAllValid = false;
+                }
+
+                if ($('#categoryName').val().trim() == '') {
+                    $('#categoryName').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#categoryName').siblings('span.error').css('visibility', 'hidden');
+                }
+
+                //if ($('#orderDate').val().trim() == '') {
+                //    $('#orderDate').siblings('span.error').css('visibility', 'visible');
+                //    isAllValid = false;
+                //}
+                //else {
+                //    $('#orderDate').siblings('span.error').css('visibility', 'hidden');
+                //}
+
+                //Save if valid
+                if (isAllValid) {
+                    var data = {
+                        CategoryCode: $('#categoryCode').val().trim(),
+                        CategoryName: $('#categoryName').val().trim(),
+                        //Sorry forgot to add Description Field
+                        Description: $('#description').val().trim(),
+                        Items: categoryItems
+                    }
+
+                    $(this).val('Please wait...');
+
+                    $.ajax({
+                        url: '/Home/Create',
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        contentType: "application/json",
+                        success: function (d) {
+                            alert(d.msg);
+                            //check is successfully save to database
+                            //if (d.status == true) {
+                            //    //will send status from server side
+                            //    alert('Successfully done.');
+                            //    //clear form
+                            //    orderItems = [];
+                            //    $('#orderNo').val('');
+                            //    $('#orderDate').val('');
+                            //    $('#orderItems').empty();
+                            //}
+                            //else {
+                            //    alert('Failed');
+                            //}
+                            $('#submit').val('Save');
+                        },
+                        error: function () {
+                            alert('Error. Please try again.');
+                            $('#submit').val('Save');
+                        }
+                    });
+                }
+
+            });
+            //function for show added items in table
+            function GeneratedItemsTable() {
+                if (categoryItems.length > 0) {
+                    var $table = $('<table/ class="table table-condensed">');
+                    $table.append('<thead><tr><th>Item</th><th>Quantity</th><th>Unit Price</th><th>Total</th></tr></thead>');
+                    var $tbody = $('<tbody/>');
+                    $.each(categoryItems, function (i, val) {
+                        var $row = $('<tr/>');
+                        $row.append($('<td/>').html(val.ItemName));
+                        $row.append($('<td/>').html(val.Quantity));
+                        $row.append($('<td/>').html(val.UnitPrice));
+                        $row.append($('<td/>').html(val.TotalPrice));
+                        $tbody.append($row);
+                    });
+                    $table.append($tbody);
+                    $('#categoryItems').html($table);
+                }
+            }
+        });
+
+    </script>
+}
