@@ -1,0 +1,3 @@
+1. Role based authentication
+2. Entity framework relationship
+3. 
