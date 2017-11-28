@@ -100,5 +100,32 @@ namespace RoleBasedAuth.Controllers
                 return View();
             }
         }
+
+        public ActionResult AddUserRoles()
+        {
+
+            List<ApplicationUser> applicationUsers = context.Users.ToList();
+
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleMngr = new RoleManager<IdentityRole>(roleStore);
+            var roles = roleMngr.Roles.ToList();
+
+            ViewBag.Users = new SelectList(applicationUsers, "Id", "UserName");
+            ViewBag.Roles = new SelectList(roles, "Id", "Name");
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddUserRoles(UserRolesVM userRolesVM)
+        {
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            userManager.AddToRole(userRolesVM.UserId, userRolesVM.RoleName);
+            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            return View();
+        }
     }
 }

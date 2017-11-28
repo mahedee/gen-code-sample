@@ -116,4 +116,3 @@ D:\Projects\Github\gen-code-sample\ASPNET-MVC\RoleBasedAuth\RoleBasedAuth\obj\De
 D:\Projects\Github\gen-code-sample\ASPNET-MVC\RoleBasedAuth\RoleBasedAuth\bin\RoleBasedAuth.dll.config
 D:\Projects\Github\gen-code-sample\ASPNET-MVC\RoleBasedAuth\RoleBasedAuth\bin\RoleBasedAuth.dll
 D:\Projects\Github\gen-code-sample\ASPNET-MVC\RoleBasedAuth\RoleBasedAuth\bin\RoleBasedAuth.pdb
-D:\Projects\Github\gen-code-sample\ASPNET-MVC\RoleBasedAuth\RoleBasedAuth\obj\Debug\RoleBasedAuth.csprojResolveAssemblyReference.cache

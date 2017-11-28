@@ -1,0 +1,8 @@
+﻿To do
+1. Create roles - Create, View, Modify and delete
+2. Create users / user registration - Create and View - 
+3. Assign role to users - Create, View, Modify and delete
+4. Impose role wise permission to controller and action
+
+References:
+1. https://www.codeproject.com/Articles/727054/ASP-NET-MVC-Identity-Extending-and-Modifying-R
