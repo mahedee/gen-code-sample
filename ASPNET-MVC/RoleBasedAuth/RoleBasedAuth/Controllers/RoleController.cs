@@ -9,9 +9,31 @@ using System.Web.Mvc;
 
 namespace RoleBasedAuth.Controllers
 {
+
+    /*
+     * Step 2: Refactoring
+     */
     public class RoleController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
+        List<ApplicationUser> applicationUsers;
+
+        UserStore<ApplicationUser> userStore;
+        UserManager<ApplicationUser> userManager;
+
+        RoleStore<IdentityRole> roleStore;
+        RoleManager<IdentityRole> roleManager;
+
+
+        public RoleController()
+        {
+            applicationUsers = context.Users.ToList();
+            userStore = new UserStore<ApplicationUser>(context);
+            userManager = new UserManager<ApplicationUser>(userStore);
+
+            roleStore = new RoleStore<IdentityRole>(context);
+            roleManager = new RoleManager<IdentityRole>(roleStore);
+        }
 
         // GET: Role
         public ActionResult Index()
@@ -103,29 +125,54 @@ namespace RoleBasedAuth.Controllers
 
         public ActionResult AddUserRoles()
         {
-
-            List<ApplicationUser> applicationUsers = context.Users.ToList();
-
-            var roleStore = new RoleStore<IdentityRole>(context);
-            var roleMngr = new RoleManager<IdentityRole>(roleStore);
-            var roles = roleMngr.Roles.ToList();
-
-            ViewBag.Users = new SelectList(applicationUsers, "Id", "UserName");
-            ViewBag.Roles = new SelectList(roles, "Id", "Name");
-
+            var roles = roleManager.Roles.ToList();
+            ViewBag.UserId = new SelectList(applicationUsers, "Id", "UserName");
+            ViewBag.RoleId = new SelectList(roles, "Id", "Name");
             return View();
         }
         [HttpPost]
         public ActionResult AddUserRoles(UserRolesVM userRolesVM)
         {
+            //var roleStore = new RoleStore<IdentityRole>(context);
+            //var roleMngr = new RoleManager<IdentityRole>(roleStore);
+            var role = roleManager.Roles.Where(p => p.Id == userRolesVM.RoleId).FirstOrDefault();
+
+            if (!userManager.IsInRole(userRolesVM.UserId, role.Name))
+            {
+                //Add role to the user
+                userManager.AddToRole(userRolesVM.UserId, role.Name);
+            }
+
+            var roles = roleManager.Roles.ToList();
+            ViewBag.UserId = new SelectList(applicationUsers, "Id", "UserName");
+            ViewBag.RoleId = new SelectList(roles, "Id", "Name");
+
+            return View();
+        }
+
+        public ActionResult _LoadUserRoles(string userId)
+        {
+            List<UserRolesVM> userRolesVMs = new List<UserRolesVM>();
+            //if(string.IsNullOrEmpty(userId))
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            userManager.AddToRole(userRolesVM.UserId, userRolesVM.RoleName);
-            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-            return View();
+            ApplicationUser user = userManager.FindById(userId);
+            IList<string> roleNames;
+
+            try
+            {
+                roleNames = userManager.GetRoles(userId).ToList();
+            }
+            catch(Exception exp)
+            {
+                roleNames = new List<string>();
+            }
+            foreach (var roleName in roleNames)
+            {
+                userRolesVMs.Add(new UserRolesVM() { UserId = user.Id, UserName = user.UserName, RoleName = roleName });
+            }
+            return PartialView(userRolesVMs);
         }
     }
 }

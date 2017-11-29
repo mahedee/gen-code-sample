@@ -269,6 +269,7 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Role\AddUserRoles.cshtml" />
+    <Content Include="Views\Role\_LoadUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
