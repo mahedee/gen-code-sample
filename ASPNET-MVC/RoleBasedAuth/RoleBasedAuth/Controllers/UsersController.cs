@@ -1,7 +1,11 @@
-﻿using RoleBasedAuth.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using RoleBasedAuth.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +14,29 @@ namespace RoleBasedAuth.Controllers
     public class UsersController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
+
+        //List<ApplicationUser> applicationUsers;
+
+        UserStore<ApplicationUser> userStore;
+        UserManager<ApplicationUser> userManager;
+
+
+
+        //RoleStore<IdentityRole> roleStore;
+        //RoleManager<IdentityRole> roleManager;
+
+
+        public UsersController()
+        {
+            //applicationUsers = context.Users.ToList();
+            userStore = new UserStore<ApplicationUser>(db);
+            userManager = new UserManager<ApplicationUser>(userStore);
+
+            //roleStore = new RoleStore<IdentityRole>(context);
+            //roleManager = new RoleManager<IdentityRole>(roleStore);
+        }
+
+
         // GET: Users
         public ActionResult Index()
         {
@@ -31,18 +58,25 @@ namespace RoleBasedAuth.Controllers
 
         // POST: Users/Create
         [HttpPost]
-        public ActionResult Create(ApplicationUser applicationUser)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RegisterViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
+                var result = userManager.Create(user);
+                if (result.Succeeded)
+                {
+                    var signinManager = Request.GetOwinContext().Get<ApplicationSignInManager>();
+                    signinManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                //AddErrors(result);
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: Users/Edit/5
