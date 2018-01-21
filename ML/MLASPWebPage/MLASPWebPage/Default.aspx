@@ -5,6 +5,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <script type="text/javascript">
+        function dataValid()
+        {
+            //Validate age
+            var inAge = document.getElementById("txtAge").value;
+            if ((inAge < 0) || (inAge > 110))
+            {
+                alert("Please an age between 0 - 110");
+                return false;
+            }
+
+            //Validate fnlwgt
+            var inFnlWgt = document.getElementById("txtFnlWgt").value;
+            if ((inFnlWgt < 12285) || (inAge > 1484705)) {
+                alert("Please an FnlWgt between 12285 - 1484705");
+                return false;
+            }
+
+            //Validate EducationNum
+            var inEducationNum = document.getElementById("txtEducationNum").value;
+            if ((inEducationNum < 1) || (inEducationNum > 16)) {
+                alert("Please a Education between 1 - 16");
+                return false;
+            }
+
+            //Validate capitalgain
+            var inCapitalGain = document.getElementById("txtCapitalGain").value;
+            if ((inCapitalGain < 0) || (inCapitalGain > 99999)) {
+                alert("Please a CapitalGain between 0 - 99999");
+                return false;
+            }
+
+
+            //Validate capitalloss
+            var inCapitalLoss = document.getElementById("txtCapitalLoss").value;
+            if ((inCapitalLoss < 0) || (inCapitalLoss > 4356)) {
+                alert("Please a CapitalLoss between 0 - 4356");
+                return false;
+            }
+
+            //Validate hoursperweek
+            var inHoursPerWeek = document.getElementById("txtHoursPerWeek").value;
+            if ((inHoursPerWeek < 1) || (inHoursPerWeek > 99)) {
+                alert("Please a Hours Per Week between 1 - 99");
+                return false;
+            }
+
+
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -236,7 +286,7 @@
                     </td>
                 </tr>
             </table>
-            <asp:Button ID="btnPrediction" runat ="server" Text="Make Prediction!" OnClick="btnPrediction_Click" />
+            <asp:Button ID="btnPrediction" runat ="server" Text="Make Prediction!" OnClick="btnPrediction_Click" OnClientClick="return dataValid();"/>
         </div>
 
 

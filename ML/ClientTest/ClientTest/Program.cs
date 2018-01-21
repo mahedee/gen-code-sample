@@ -43,10 +43,12 @@ namespace ClientTest
                     {
                     }
                 };
-                const string apiKey = "i3EYmQuNEPuVD5Khb7mWlbDEX/2C8DgPZSQTbdEQpKDIJ6B3aKbBE+EmBHGA/OiXvchapDiEtoUud/+gLF/lDQ=="; // Replace this with the API key for the web service
+
+
+                const string apiKey = "QjBI1INingF4w2AsUxi2kT14VUmTTI0onfori/OJswSiFKnLsZqlLedRl+1A4s2HD2hy4h/y1Y782ihl0ZePhw=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
-                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/17edd04bb616461d8427c88df909f1e2/services/a6240c7f573c4a47b6f1b88015350442/execute?api-version=2.0&details=true");
+                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9f5a46e7452b4199929a1fb90f226160/services/c283330d7dd44270b7565790e2b1f24a/execute?api-version=2.0&details=true");
 
                 // WARNING: The 'await' statement below can result in a deadlock if you are calling this code from the UI thread of an ASP.Net application.
                 // One way to address this would be to call ConfigureAwait(false) so that the execution does not attempt to resume on the original context.
