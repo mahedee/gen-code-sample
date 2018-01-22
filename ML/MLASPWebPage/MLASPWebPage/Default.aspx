@@ -6,12 +6,10 @@
 <head runat="server">
     <title></title>
     <script type="text/javascript">
-        function dataValid()
-        {
+        function dataValid() {
             //Validate age
             var inAge = document.getElementById("txtAge").value;
-            if ((inAge < 0) || (inAge > 110))
-            {
+            if ((inAge < 0) || (inAge > 110)) {
                 alert("Please an age between 0 - 110");
                 return false;
             }
@@ -286,13 +284,15 @@
                     </td>
                 </tr>
             </table>
-            <asp:Button ID="btnPrediction" runat ="server" Text="Make Prediction!" OnClick="btnPrediction_Click" OnClientClick="return dataValid();"/>
+            <asp:Button ID="btnPrediction" runat="server" Text="Make Prediction!" OnClick="btnPrediction_Click" OnClientClick="return dataValid();" />
         </div>
 
 
-        <div style="float: left; background-color: azure; min-height: 600px;">
-
-            <h1>Test here...</h1>
+        <div style="float: left; background-color: azure; min-height: 600px;" runat="server" id="divPanel">
+            <asp:BulletedList ID="BulletedList1" runat="server"
+                BulletStyle="Circle"
+                DisplayMode="Text">
+            </asp:BulletedList>
         </div>
     </form>
 </body>
