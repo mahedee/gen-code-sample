@@ -9,6 +9,8 @@ namespace MLWebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            //Enable Cross-Orignin Resource Sharing (CORS)
+            config.EnableCors();
             // Web API configuration and services
 
             // Web API routes
