@@ -1,0 +1,25 @@
+Reporting API Example scripts
+=============================
+
+* Bash Shell examples require curl and openssl.
+
+basicreportexample.sh
+A command line driven script to demonstrate an adhoc report download.
+The merchant id is specified on the command line and password is prompted when run.
+
+downloadreport.sh
+A non-interactive script for purpose of cron execution. When run, it downloads a csv file containing all the new transactions since the last download.
+The merchant id is configured within the script.
+The password is expected to be configured in a .netrc file.
+
+* Power Shell examples require Windows PowerShell
+
+basicreportexample.ps1
+A command line driven script to demonstrate an adhoc report download.
+The merchant id is specified on the commandline and password is prompted when run.
+
+downloadreport.ps1
+A non-interactive script for purpose of cron execution. When run, it downloads a csv file containing all the new transactions since the last download.
+The merchant id is configured within the script.
+Run the setpassword.ps1 script first and type in Reporting API password when prompted.
+

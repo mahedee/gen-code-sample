@@ -1,0 +1,3 @@
+apiOperation,order.id,transaction.id,transaction.amount,transaction.currency,sourceOfFunds.type,sourceOfFunds.provided.card.number,sourceOfFunds.provided.card.expiry.month,sourceOfFunds.provided.card.expiry.year,result,error.cause,error.explanation,response.gatewayCode
+PAY,936742085167,TX1,30.00,AUD,CARD,<CARD_NUMBER>,02,14,,,,
+PAY,936742085168,TX1,35.00,AUD,CARD,<CARD_NUMBER>,02,14,,,,
