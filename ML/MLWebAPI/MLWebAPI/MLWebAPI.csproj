@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="readme.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

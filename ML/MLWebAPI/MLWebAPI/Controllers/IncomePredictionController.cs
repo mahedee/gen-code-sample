@@ -1,4 +1,5 @@
 ﻿using MLWebAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -59,18 +60,53 @@ namespace MLWebAPI.Controllers
             string inNativeCountry = nvc[13];
 
 
+            //using (var client = new HttpClient())
+            //{
+            //    var scoreRequest = new
+            //    {
+
+            //        Inputs = new Dictionary<string, StringTable>() {
+            //            {
+            //                "input1",
+            //                new StringTable()
+            //                {
+            //                    ColumnNames = new string[] {"age", "education", "marital-status", "relationship", "race", "sex"},
+            //                    Values = new string[,] {  { inAge, inEducation, inMaritalStatus, inRelationship, inRace, inSex}}
+            //                }
+            //            },
+            //        },
+            //        GlobalParameters = new Dictionary<string, string>()
+            //        {
+            //        }
+            //    };
+
             using (var client = new HttpClient())
             {
                 var scoreRequest = new
                 {
-
-                    Inputs = new Dictionary<string, StringTable>() {
+                    Inputs = new Dictionary<string, List<Dictionary<string, string>>>() {
                         {
                             "input1",
-                            new StringTable()
-                            {
-                                ColumnNames = new string[] {"age", "education", "marital-status", "relationship", "race", "sex"},
-                                Values = new string[,] {  { inAge, inEducation, inMaritalStatus, inRelationship, inRace, inSex}}
+                            new List<Dictionary<string, string>>(){new Dictionary<string, string>(){
+                                            {
+                                                "age", inAge
+                                            },
+                                            {
+                                                "education", inEducation
+                                            },
+                                            {
+                                                "marital-status", inMaritalStatus
+                                            },
+                                            {
+                                                "relationship", inRelationship
+                                            },
+                                            {
+                                                "race", inRace
+                                            },
+                                            {
+                                                "sex", inSex
+                                            },
+                                }
                             }
                         },
                     },
@@ -85,7 +121,8 @@ namespace MLWebAPI.Controllers
                 const string apiKey = "QjBI1INingF4w2AsUxi2kT14VUmTTI0onfori/OJswSiFKnLsZqlLedRl+1A4s2HD2hy4h/y1Y782ihl0ZePhw=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
-                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9f5a46e7452b4199929a1fb90f226160/services/c283330d7dd44270b7565790e2b1f24a/execute?api-version=2.0&details=true");
+                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9f5a46e7452b4199929a1fb90f226160/services/c283330d7dd44270b7565790e2b1f24a/execute?api-version=2.0&format=swagger");
+                //client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9f5a46e7452b4199929a1fb90f226160/services/c283330d7dd44270b7565790e2b1f24a/execute?api-version=2.0&details=true");
 
                 //Time the ML Web Service Call
                 sw.Start();
@@ -99,9 +136,13 @@ namespace MLWebAPI.Controllers
                     //Read the http response
                     string MLResp = await response.Content.ReadAsStringAsync(); //.ConfigureAwait(false);
 
-                    //Parse ML Web Service Response and return a populated IncomePredictionResults response recored
-                    incomePredictionResults = ParseMLResponse(MLResp);
+                    //Todo: Model bind
+                    var  responseObj = JsonConvert.DeserializeObject<RootObject>(MLResp);
 
+                    //Parse ML Web Service Response and return a populated IncomePredictionResults response recored
+                    //incomePredictionResults = ParseMLResponse(MLResp);
+
+                    incomePredictionResults = responseObj.Results.output1[0];
                     //Update for ML Service Response Time
                     incomePredictionResults.MLResponseTime = elapsed;
                 }

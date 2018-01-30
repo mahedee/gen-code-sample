@@ -1,0 +1,1 @@
+﻿Input: http://localhost:4578/api/IncomePrediction/GetPrediction?age=53&workclass=self-emp-not-inc&fnlwgt=209642&education=HS-grad&education-num=9&marital-status=married-civ-spouse&occupation=exc-manegarial&relationship=Husband&race=white&sex=male&capital-gain=0&capital-loss=0&hours-per-week=45&native-country=united-states
